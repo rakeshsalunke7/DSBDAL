@@ -1,0 +1,70 @@
+import numpy as np
+
+invent= np.array([
+    [100, 200, 150, 300],  # Product 1
+    [50, 60, 40, 80],      # Product 2
+    [300, 400, 350, 500],  # Product 3
+    [200, 250, 220, 270],  # Product 4
+    [80, 90, 70, 100]      # Product 5
+])
+
+invent.shape
+
+invent.dtype
+
+invent.size
+
+invent.itemsize
+
+invent.size*invent.itemsize
+
+invent=invent+20
+
+invent
+
+invent[2]-=10
+
+print(invent)
+
+invent[1]*=2
+
+print(invent)
+
+max_cap=1000
+
+per_stock=(invent/max_cap)*100
+
+print(per_stock)
+
+total=np.sum(invent,axis=1)
+
+print(total)
+
+total_loc=np.sum(invent,axis=1)
+
+print(total_loc)
+
+total_proloc=np.sum(invent,axis=1)
+
+print(total_pro)
+
+max_stock=np.argmax(total_proloc)
+
+print(max_stock)
+
+total_pro=np.sum(invent,axis=0)
+
+print(total_pro)
+
+min_stock=np.argmin(total_pro)
+
+print(min_stock)
+
+avg_pro = np.mean(invent, axis=1)
+
+print(avg_pro)
+
+pro_2=invent[1]
+
+print(pro_2)
+
