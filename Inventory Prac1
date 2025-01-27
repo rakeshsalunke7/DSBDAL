@@ -46,7 +46,7 @@ print(total_loc)
 
 total_proloc=np.sum(invent,axis=1)
 
-print(total_pro)
+print(total_proloc)
 
 max_stock=np.argmax(total_proloc)
 
