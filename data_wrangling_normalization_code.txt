@@ -1,0 +1,44 @@
+
+# Step 1: Import required libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import zscore
+from sklearn.preprocessing import MinMaxScaler
+
+# Step 2: Load the dataset
+df = pd.read_csv("student_data.csv")  # Adjust the path if needed
+
+# Step 3: Clean column names
+df.columns = df.columns.str.strip().str.replace(' ', '_')
+
+# Step 4: Identify numeric columns for analysis
+numeric_cols = ['math_score', 'reading_score', 'writing_score', 'placement_score', 'placement_offer_count']
+
+# Step 5: Remove outliers using Z-score
+z_scores = df[numeric_cols].apply(zscore)
+df_no_outliers = df[(z_scores.abs() < 3).all(axis=1)]
+
+print(f"Removed {len(df) - len(df_no_outliers)} outliers")
+
+# Step 6: Visualize with boxplots
+plt.figure(figsize=(12, 8))
+for i, col in enumerate(numeric_cols, 1):
+    plt.subplot(2, 3, i)
+    sns.boxplot(data=df_no_outliers[col])
+    plt.title(f'Boxplot of {col}')
+plt.tight_layout()
+plt.show()
+
+# Step 7: Normalize the numeric columns
+scaler = MinMaxScaler()
+normalized_data = scaler.fit_transform(df_no_outliers[numeric_cols])
+
+# Convert to DataFrame and add non-numeric columns back
+df_normalized = pd.DataFrame(normalized_data, columns=numeric_cols)
+df_normalized['Gender'] = df_no_outliers['Gender'].values
+df_normalized['club_join_date'] = df_no_outliers['club_join_date'].values
+
+# Step 8: Display normalized data
+print(df_normalized.head())
